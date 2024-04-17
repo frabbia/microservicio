@@ -20,17 +20,16 @@ app.get('/sum', async (req, res) => {
   }
 });
 
-app.get('/autos', async (req, res) => {
-  try {
 
-    const { data: autos } = await axios.get('http://localhost:6002/autos');
+app.get('/marcas', async (req, res) => {
+  try {
+    const { data: autos } = await axios.get('http://localhost:6002/marcas');
     res.json({ autos });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al encontrar un auto' });
+    res.status(500).json({ error: 'Error al obtener las marcas de auto' });
   }
 });
-
 
 app.listen(PORT, () => {
   console.log(`Servidor de suma corriendo en http://localhost:${PORT}`);
