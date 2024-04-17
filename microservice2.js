@@ -5,9 +5,11 @@ require('dotenv').config();
 const app = express();
 const PORT3 = process.env.PORT3;
 
-app.get('/marcas', async (req, res) => {
+app.get('/marcas/:marca/:year', async (req, res) => {
   try {
-    const response = await axios.get('https://www.carqueryapi.com/api/0.3/?cmd=getTrims&make=Acura&year=2022');
+    const {marca} = req.params;
+    const {year} = req.params;
+    const response = await axios.get(`https://www.carqueryapi.com/api/0.3/?cmd=getTrims&make=${marca}&year=${year}`);
     const trims = response.data.Trims;
     res.json({ trims });
   } catch (error) {
