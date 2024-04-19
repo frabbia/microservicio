@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulta de Modelos de Autos</title>
+</head>
+<body>
+  <h1>Consulta de Modelos de Autos</h1>
+  <form id="consultaForm">
+    <label for="marca">Marca:</label>
+    <input type="text" id="marca" name="marca" value="Toyota"><br><br>
+    <label for="year">Año:</label>
+    <input type="number" id="year" name="year" value="2022"><br><br>
+    <button type="submit">Consultar</button>
+  </form>
+  <div id="resultado"></div>
+
+  <script>
+    document.getElementById('consultaForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const marca = document.getElementById('marca').value;
+      const year = document.getElementById('year').value;
+
+      try {
+        const response = await fetch(`http://localhost:6000/sum`);
+        if (!response.ok) {
+          throw new Error('No se pudo completar la solicitud.');
+        }
+
+        const data = await response.json();
+
+        const resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.innerHTML = ''; 
+
+        data.autos.forEach(auto => {
+          const autoInfo = document.createElement('p');
+          autoInfo.textContent = `Marca: ${auto.marca}, Modelo: ${auto.modelo}, Año: ${auto.año}`;
+          resultadoDiv.appendChild(autoInfo);
+        });
+      } catch (error) {
+        console.error('Error al consultar modelos de autos:', error);
+        const resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.innerHTML = 'Error al consultar modelos de autos. Por favor, intenta de nuevo más tarde.';
+      }
+    });
+  </script>
+</body>
+</html>

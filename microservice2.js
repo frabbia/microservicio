@@ -1,9 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
 const PORT3 = process.env.PORT3;
+
+app.use(cors());
 
 app.get('/marcas/:marca/:year', async (req, res) => {
   try {
